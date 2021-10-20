@@ -1,5 +1,5 @@
 # Remote Plant Monitor
-- System that allows user to track soil humididty along with ambient temperature for remote monitoring of plants or crops.
+- System that allows user to track soil humidity along with ambient temperature for remote monitoring of plants or crops.
 
 ## Specs
 - Raspberry Pi with hygrometer and thermistor to create embedded system

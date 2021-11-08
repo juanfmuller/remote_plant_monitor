@@ -3,8 +3,9 @@
 
 ## Specs
 - Raspberry Pi with hygrometer and thermistor to create embedded system
-- Script to POST metrics from RPi to database
-- Windows application to GET & display metrics and alert user of certain conditions (ex. low soil humidity)
+- Script to send data files (txt) between RPi and Windows PC 
+- Windows application to get data from files & display metrics
+- Alert user of certain conditions (ex. low soil humidity)
 
 ## Contributors
 - Contributors: [Richard Martinez](https://github.com/INFINITELOGIN) | [Marco Colmenero](https://github.com/macolmenero75)

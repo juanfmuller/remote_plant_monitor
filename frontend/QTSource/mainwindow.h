@@ -20,9 +20,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_Plot_Button_clicked();
-
-    void on_Get_Value_clicked();
+    void on_alertButton_clicked();
+    void on_plotButton_clicked();
+    void on_downloadDataFromFile();
 
 private:
     Ui::MainWindow *ui;

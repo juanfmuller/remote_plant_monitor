@@ -10,12 +10,18 @@
 #include <thread>
 #include <chrono>
 #include <vector>
+#include <QVector>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_plotButton_clicked()));
+    timer->start(2000);
 }
 
 MainWindow::~MainWindow()
@@ -24,37 +30,63 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_Plot_Button_clicked()
+void MainWindow::on_alertButton_clicked()
 {
     Plot pd(this);
     pd.exec();
 }
 
-
-void MainWindow::on_Get_Value_clicked()
+void MainWindow::on_downloadDataFromFile()
 {
-    /*QFile file("C:/Users/baddo/OneDrive/Documents/Software Design 2/Textsfilesssssss");
-    if(!file.open(QIODevice::ReadOnly))
-    QMessageBox::information(0,"info", file.errorString());
-
-    QTextStream in(&file);
-
-    ui->GetValue->setText(in.readAll());  //Text browser name is Getvalues to send the file */
-
-    using namespace std;
-    ifstream file;
-    file.open("C:/Users/baddo/OneDrive/Documents/Software Design 2/Textsfilesssssss/firstText.txt");
-    if(!file) cout << "file not found" << endl;
-    string strArray[100];
-    string line;
-    string ph;
-    int i=0;
-    while(getline(file, line)){
-        strArray[i] = line;
-        cout << strArray[i] << endl;
-        ph = ph + strArray[i] + "\n";
-        ++i;
-    }
-  //  ui->GetValue->setPlainText(QString::fromStdString(ph));
 
 }
+
+void MainWindow::on_plotButton_clicked()
+{
+    int value;
+    int maxTemp = 0;
+    int minTemp = 100;
+    std::vector<double> x;
+    std::vector<double> y;
+    std::ifstream file("C:/Users/JFMuller/Documents/Projects/remote_plant_monitor/frontend/QTSource/tempValues.txt");
+    if(file.is_open())
+    {
+        std::cout << "file open";
+        while(file >> value)
+        {
+            maxTemp = (maxTemp < value ? value : maxTemp);
+            minTemp = (minTemp > value ? value : minTemp);
+            std::cout << value;
+            y.push_back(value);
+        }
+    } else {
+        std::cout << "file NOT open";
+    }
+
+    // generate some data:
+    for (size_t i=0; i < y.size(); ++i)
+    {
+      x.push_back(i); // let's plot a quadratic function
+    }
+
+    QVector<double> xx;
+    QVector<double> yy;
+    for(size_t j = 0; j < y.size(); j++){
+        yy.push_back(y[j]);
+    }
+    for(size_t j = 0; j < x.size(); j++){
+        xx.push_back(x[j]);
+    }
+
+    // create graph and assign data to it:
+    ui->tempPlot->addGraph();
+    ui->tempPlot->graph(0)->setData(xx, yy);
+    // give the axes some labels:
+    ui->tempPlot->xAxis->setLabel("x");
+    ui->tempPlot->yAxis->setLabel("y");
+    // set axes ranges, so we see all data:
+    ui->tempPlot->xAxis->setRange(0, x.size());
+    ui->tempPlot->yAxis->setRange((minTemp - 10), (maxTemp + 10));
+    ui->tempPlot->replot();
+}
+

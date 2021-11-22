@@ -23,6 +23,7 @@ private slots:
     void on_alertButton_clicked();
     void on_plotButton_clicked();
     void on_downloadDataFromFile();
+    void on_plotHumidity();
 
 private:
     Ui::MainWindow *ui;

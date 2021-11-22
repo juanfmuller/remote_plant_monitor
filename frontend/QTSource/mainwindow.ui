@@ -87,7 +87,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QCustomPlot" name="widget_2" native="true">
+   <widget class="QCustomPlot" name="humidityPlot" native="true">
     <property name="geometry">
      <rect>
       <x>540</x>

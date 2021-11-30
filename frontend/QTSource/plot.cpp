@@ -11,7 +11,7 @@ Plot::Plot(QWidget *parent) :
     QBarSet *set0 = new QBarSet("Flower");
 
 
-    *set0 << 60 << 50 << 12 << 67 << 13 << 23;
+    *set0 << 40 << 50 << 33 << 75 << 45 << 69;
 
 
     QBarSeries *series = new QBarSeries();

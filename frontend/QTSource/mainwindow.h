@@ -21,7 +21,7 @@ public:
 
 private slots:
     void on_alertButton_clicked();
-    void on_plotButton_clicked();
+    void on_plotTemp();
     void on_downloadDataFromFile();
     void on_plotHumidity();
 

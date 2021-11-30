@@ -18,11 +18,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->comboBox->addItem("Rose");
+    ui->comboBox->addItem("Sunflower");
+    ui->comboBox->addItem("Marigold");
+    ui->comboBox->addItem("Daisy");
+    ui->comboBox->addItem("Tulip");
+
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, SIGNAL(timeout()), this, SLOT(on_downloadDataFromFile()));
+    timer2->start(2000);
 
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_plotButton_clicked()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_plotTemp()));
     connect(timer, SIGNAL(timeout()), this, SLOT(on_plotHumidity()));
-    timer->start(5000);
+    timer->start(4000);
 }
 
 MainWindow::~MainWindow()
@@ -39,17 +48,19 @@ void MainWindow::on_alertButton_clicked()
 
 void MainWindow::on_downloadDataFromFile()
 {
-    system("pscp -pw \"raspberry\" pi@192.168.0.20:/home/pi/backend/temp_values.txt C:/Users/JFMuller/Documents/Projects/remote_plant_monitor/frontend/QTSource");
+    system("pscp -pw raspberry -P 22 pi@172.16.15.173:/home/pi/backend/temp_values.txt C:/text/");
+    std::cout << "test";
+    system("pscp -pw raspberry -P 22 pi@172.16.15.173:/home/pi/backend/moist_values.txt C:/text/");
 }
 
-void MainWindow::on_plotButton_clicked()
+void MainWindow::on_plotTemp()
 {
     int value;
     int maxTemp = 0;
     int minTemp = 100;
     std::vector<double> x;
     std::vector<double> y;
-    std::ifstream file("C:/Users/JFMuller/Documents/Projects/remote_plant_monitor/frontend/QTSource/temp_values.txt");
+    std::ifstream file("C:/text/temp_values.txt");
     if(file.is_open())
     {
         std::cout << "file open";
@@ -100,7 +111,7 @@ void MainWindow::on_plotHumidity()
     int minTemp = 100;
     std::vector<double> x;
     std::vector<double> y;
-    std::ifstream file("C:/Users/JFMuller/Documents/Projects/remote_plant_monitor/frontend/QTSource/humidity_values.txt");
+    std::ifstream file("C:/text/moist_values.txt");
     if(file.is_open())
     {
         std::cout << "file open";

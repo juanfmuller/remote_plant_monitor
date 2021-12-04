@@ -18,9 +18,6 @@ i2c = busio.I2C(board.SCL, board.SDA)
 from adafruit_ads1x15.analog_in import AnalogIn
 ads = ADS.ADS1015(i2c)
 chan0 = AnalogIn(ads, ADS.P0)
-chan1 = AnalogIn(ads, ADS.P1) 
-
-percentage = (chan0.voltage / 3.3) * 100
 
 def read_temp_raw():
     f = open(device_file, 'r')
@@ -38,11 +35,11 @@ def read_temp():
         temp_string = lines[1][equals_pos+2:]
         temp_c = int(temp_string) / 1000
         temp_f = temp_c * 9 / 5 + 32
-        
-        #return temp_c, temp_f
+
         return math.trunc(temp_f)
     
 while True:
+    percentage = ((((chan0.voltage / 3.3) * 100)-100)*-1)
     with open('moist_values.txt', 'a') as f:
         print(math.trunc(percentage), file=f)
         print('Humidity:',math.trunc(percentage)) 
